@@ -1,0 +1,31 @@
+
+<div class="form-group">
+  <div class="col-lg-4">
+    第@{context.queryForm.currentPage}页 共@{context.queryForm.totalPage}页 @{context.queryForm.totalCount}条
+  </div>
+  <div class="col-lg-8">
+    <ul class="pagination pull-right">
+    @if{context.queryForm.hasPrevious()}
+        <li><a class="@{context.baseCssClass}_link" href='javascript:gotoPage("@{context.formId}","@{context.queryKey}",1)' >首页</a></li>
+        <li><a class="@{context.baseCssClass}_link" href='javascript:gotoPage("@{context.formId}","@{context.queryKey}",@{context.queryForm.getPreviousPage()})' >上一页</a></li>
+    @end{}
+    @if{context.queryForm.hasNext()}
+        <li><a class="@{context.baseCssClass}_link" href='javascript:gotoPage("@{context.formId}","@{context.queryKey}",@{context.queryForm.getNextPage()})' >下一页</a></li>
+        <li><a class="@{context.baseCssClass}_link" href='javascript:gotoPage("@{context.formId}","@{context.queryKey}",@{context.queryForm.getLastPage()})' >尾页</a></li>
+    @else{}
+    @end{}
+    @if{context.queryForm.totalPage>1}
+        <li><a class="@{context.baseCssClass}_link" href="javascript:void(0)"> 前往第 <input type="text" class="@{context.baseCssClass}_input" style="margin-bottom:0;margin-top:0;width:30px;height:15px;direction:rtl;font-size:10px;" id="_pageinput_@{context.queryKey}" autocomplete="off" onkeydown='if(event.keyCode==13) gotoPage("@{context.formId}","@{context.queryKey}",this.value, @{context.queryForm.getLastPage()});' onkeypress='if(event.keyCode==13) gotoPage("@{context.formId}","@{context.queryKey}",this.value, @{context.queryForm.getLastPage()});'/> 页</a></li>
+        <li><a id="skip" href="javascript:void(0)" onclick="skipPage();">转到</a></li>
+    @end{}
+
+
+    </ul>
+  </div>
+</div>
+
+<script>
+function skipPage(){
+    gotoPage("@{context.formId}","@{context.queryKey}",document.getElementById("_pageinput_@{context.queryKey}").value, @{context.queryForm.getLastPage()});return false;
+}
+</script>

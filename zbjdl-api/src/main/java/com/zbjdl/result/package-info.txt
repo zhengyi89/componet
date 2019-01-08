@@ -1,0 +1,8 @@
+/**
+ * 基础api 返回结果基类
+ */
+/**
+ * @author 
+ *
+ */
+package com.zbjdl.result;

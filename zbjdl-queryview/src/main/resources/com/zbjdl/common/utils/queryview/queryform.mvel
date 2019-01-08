@@ -1,0 +1,4 @@
+<form id="@{context.formId}" action="@{context.queryUrl}" method="post">@foreach{entry : context.queryForm.httpParams.entrySet()}@if{entry.value.getClass().isArray()}@foreach{arrayValue : entry.value}
+	<input type="hidden" name="@{helper.escape(entry.key)}" value="@{helper.escape(arrayValue)}"/>@end{}@else{}
+	<input type="hidden" name="@{helper.escape(entry.key)}" value="@{helper.escape(entry.value)}"/>@end{}@end{}
+</form>

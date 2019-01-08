@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zbjdl.common.demo.repository.OrderRepository">
+
+    <resultMap id="orderResultMap" type="com.zbjdl.common.demo.model.Order">
+        <id property="id" column="ID"/>
+        <result property="version" column="VERSION"/>
+        <result property="createdDate" column="CREATED_DATETIME"/>
+        <result property="lastModifiedDate" column="LAST_MODIFIED_DATETIME"/>
+
+        <result property="productName" column="PRODUCT_NAME"/>
+        <result property="orderNumber" column="ORDERNUMBER"/>
+        <result property="amount" column="AMOUNT"/>
+        <result property="itemNames" column="ITEM_NAMES"/>
+        <result property="status" column="STATUS"/>
+    </resultMap>
+
+    <insert id="save" keyProperty="id" useGeneratedKeys="true"
+            parameterType="Order">
+        INSERT INTO ORDERS(PRODUCT_NAME, ORDERNUMBER,AMOUNT,STATUS,ITEM_NAMES,CREATED_DATETIME, VERSION)
+        VALUES (#{productName}, #{orderNumber},#{amount},#{status},#{itemNames},#{createdDate}, 0)
+    </insert>
+
+    <update id="update" parameterType="Order">
+        update ORDERS
+        <set>
+            <if test="status !=null and status.trim() != ''">
+                STATUS=#{status},
+            </if>
+            <if test="productName !=null">
+                PRODUCT_NAME=#{productName},
+            </if>
+            <if test="amount !=null">
+                AMOUNT=#{amount},
+            </if>
+            VERSION = VERSION + 1,
+            LAST_MODIFIED_DATETIME = CURRENT_TIMESTAMP
+        </set>
+        WHERE ID = #{id} AND VERSION = #{version}
+    </update>
+
+    <delete id="delete" parameterType="Long">
+        DELETE FROM ORDERS
+        WHERE ID = #{id}
+    </delete>
+
+    <select id="selectById" resultMap="orderResultMap" parameterType="long">
+        SELECT
+        *
+        FROM ORDERS
+        WHERE ID = #{id}
+    </select>
+
+</mapper>

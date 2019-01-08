@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+			http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+			http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd"
+	default-autowire="byName">
+
+	<bean class="com.zbjdl.common.utils.event.lang.invoker.SpringInvokerUtils" />
+	
+	<!-- ==================== INVOKE MODEL ========================== -->
+	<!-- define common inteceptor -->
+	<bean id="callableEventInterceptor"
+		class="com.zbjdl.common.utils.event.impl.flow.CallableEventInterceptor">
+		<property name="engineListeners">
+			<list>
+				<ref bean="protocolCallable" />
+				<ref bean="pubSubCallable" />
+			</list>
+		</property>
+	</bean>
+	<bean id="notifyToCallIEventnterceptor"
+		class="com.zbjdl.common.utils.event.impl.flow.NotifyToCallIEventnterceptor" />
+	<bean id="reliableNotifyHandleInterceptor"
+		class="com.zbjdl.common.utils.event.impl.flow.ReliableNotifyHandleInterceptor" />
+	<bean id="deadEventCheckerEventInterceptor"
+		class="com.zbjdl.common.utils.event.impl.flow.DeadEventCheckerEventInterceptor" />
+	<bean id="newEventCheckerEventInterceptor"
+		class="com.zbjdl.common.utils.event.impl.flow.NewEventCheckerEventInterceptor" />
+
+	<!-- define call invoke model -->
+	<bean id="callEventInterceptorChain"
+		class="com.zbjdl.common.utils.event.core.chain.EventInterceptorChainImpl">
+		<property name="chains">
+			<list>
+				<ref bean="callableEventInterceptor" />
+			</list>
+		</property>
+	</bean>
+	<bean id="callChainAdaptor" class="com.zbjdl.common.utils.event.impl.CallerChainAdaptor">
+		<property name="eventInterceptorChain">
+			<ref bean="callEventInterceptorChain" />
+		</property>
+	</bean>
+	<bean id="callBroker" class="com.zbjdl.common.utils.event.impl.call.CallBrokerImpl">
+		<property name="callerChainAdaptor">
+			<ref bean="callChainAdaptor" />
+		</property>
+	</bean>
+
+	<!-- R-R invoke model -->
+	<bean id="rrEventInterceptorChain"
+		class="com.zbjdl.common.utils.event.core.chain.EventInterceptorChainImpl">
+		<property name="chains">
+			<list>
+				<ref bean="callableEventInterceptor" />
+			</list>
+		</property>
+	</bean>
+	<bean id="rrChainAdaptor" class="com.zbjdl.common.utils.event.impl.CallerChainAdaptor">
+		<property name="eventInterceptorChain">
+			<ref bean="rrEventInterceptorChain" />
+		</property>
+	</bean>
+	<bean id="rrBroker" class="com.zbjdl.common.utils.event.impl.call.RequestBrokerImpl">
+		<property name="rrExecutorService" ref="executorServiceAdaptor" />
+		<property name="callerChainAdaptor">
+			<ref bean="rrChainAdaptor" />
+		</property>
+	</bean>
+
+	<!-- Notify invoke model -->
+	<bean id="notifyEventInterceptorChain"
+		class="com.zbjdl.common.utils.event.core.chain.EventInterceptorChainImpl">
+		<property name="chains">
+			<list>
+				<ref bean="deadEventCheckerEventInterceptor" />
+				<ref bean="newEventCheckerEventInterceptor" />
+				<ref bean="reliableNotifyHandleInterceptor" />
+				<ref bean="notifyToCallIEventnterceptor" />
+				<ref bean="callableEventInterceptor" />
+			</list>
+		</property>
+	</bean>
+	<bean id="notifyChainAdaptor" class="com.zbjdl.common.utils.event.impl.CallerChainAdaptor">
+		<property name="eventInterceptorChain">
+			<ref bean="notifyEventInterceptorChain" />
+		</property>
+	</bean>
+	<bean id="notifyBroker" class="com.zbjdl.common.utils.event.impl.notify.NotifyBrokerImpl">
+		<property name="notifyExecutorService" ref="executorServiceAdaptor" />
+		<property name="notifyDelayStrategy" ref="notifyDelayStrategy" />
+		<property name="callerChainAdaptor">
+			<ref bean="notifyChainAdaptor" />
+		</property>
+	</bean>
+
+	<!-- join event engine arc -->
+	<bean class="com.zbjdl.common.utils.event.impl.EventEngineImpl">
+		<property name="providers">
+			<list>
+				<ref bean="callBroker" />
+				<ref bean="rrBroker" />
+				<ref bean="notifyBroker" />
+			</list>
+		</property>
+	</bean>
+
+	<!-- =========================define thread pool ========================== -->
+	<bean id="executorServiceAdaptor"
+		class="com.zbjdl.common.utils.event.core.thread.AsyncExecutorServiceAdaptor"
+		init-method="init">
+		<property name="radio" value="30" />
+		<property name="notifyQueueSize" value="10000" />
+		<property name="keepAliveTime" value="1000" />
+	</bean>
+
+	<!-- ============= Notify Ext BEGIN======================== -->
+	<bean id="notifyQueueMonitor"
+		class="com.zbjdl.common.utils.event.impl.notify.NotifyQueueMonitor"
+		init-method="init">
+		<property name="notifyExecutorService" ref="executorServiceAdaptor" />
+		<property name="notifyStatusEventSupport" ref="notifyStatusEventSupport" />
+	</bean>
+	<bean id="notifyDataRecover"
+		class="com.zbjdl.common.utils.event.impl.notify.NotifyDataRecoverImpl">
+		<property name="notifyExecutorService" ref="executorServiceAdaptor" />
+		<property name="notifyStatusEventSupport" ref="notifyStatusEventSupport" />
+	</bean>
+	<bean id="notifyStatusEventSupport"
+		class="com.zbjdl.common.utils.event.impl.notify.NotifyStatusEventSupport">
+		<property name="listener" ref="notifyBroker" />
+	</bean>
+	<bean id="notifyDelayStrategy"
+		class="com.zbjdl.common.utils.event.impl.notify.NotifyDelayStrategy" />
+	<!-- ============= Notify Ext END ======================== -->
+
+	<!-- =========================define File Storage ========================== -->
+	<bean id="tableManagerImpl"
+		class="com.zbjdl.common.utils.event.core.fstore.impl.TableManagerImpl"
+		init-method="init" destroy-method="destroy">
+	</bean>
+
+
+	<bean class="com.zbjdl.common.utils.event.core.fstore.TableCleanTask"
+		init-method="init" destroy-method="destroy" />
+
+	<!-- =========================define engine callable ======================= -->
+	<bean id="pubSubCallable" class="com.zbjdl.common.utils.event.impl.flow.call.PubSubCallable"
+		init-method="init" destroy-method="destroy" />
+
+	<bean id="protocolCallable"
+		class="com.zbjdl.common.utils.event.impl.flow.call.ProtocolCallable"
+		init-method="init" destroy-method="destroy">
+		<property name="invokers">
+			<list>
+				<ref bean="springVmInvoker" />
+				<ref bean="httpInvoker" />
+				<ref bean="jndiVmInvoker" />
+			</list>
+		</property>
+	</bean>
+
+	<!-- other protocol support -->
+	<bean id="jndiVmInvoker" class="com.zbjdl.common.utils.event.impl.spi.vm.JndiVmInvoker"
+		init-method="init" destroy-method="destroy" />
+
+	<bean id="springVmInvoker" class="com.zbjdl.common.utils.event.impl.spi.vm.SpringVmInvoker"
+		init-method="init" destroy-method="destroy" />
+
+	<bean id="httpInvoker" class="com.zbjdl.common.utils.event.impl.spi.http.HttpInvoker" />
+
+	<!-- ========================define http protocol ============================ -->
+	<!-- vip define -->
+	<bean id="serviceVipManager"
+		class="com.zbjdl.common.utils.event.impl.spi.conf.ServiceVipManager"
+		init-method="init" />
+
+	<!-- http protocol support -->
+	<bean id="httpClientProxy" class="com.zbjdl.common.utils.event.impl.spi.http.HttpClientProxy"
+		init-method="init" destroy-method="destroy" />
+
+	<bean id="httpLoadBalancerManager"
+		class="com.zbjdl.common.utils.event.impl.spi.http.HttpLoadBalancerManager"
+		init-method="init" destroy-method="destroy" />
+
+	<bean id="baseEventDispatcher" class="com.zbjdl.common.utils.event.ext.BaseEventDispatcher" />
+
+	<bean id="basePropertyReplacer"
+		class="com.zbjdl.common.utils.event.utils.CustomerPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:config/zbjdl-event.properties</value>
+			</list>
+		</property>
+		<property name="fileEncoding">
+			<value>UTF-8</value>
+		</property>
+	</bean>
+</beans>

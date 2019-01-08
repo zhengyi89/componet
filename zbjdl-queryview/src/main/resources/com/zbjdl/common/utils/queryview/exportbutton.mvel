@@ -1,0 +1,12 @@
+<a href='javascript:sendRequest("@{context.formId}@{context.queryKey}");'>
+<button class="btn btn-default button ml_20" type="submit">
+	导出EXCEL<span class="content_blank_10"></span><span class="glyphicon glyphicon-share-alt"></span>
+</button>
+</a>
+<form id="@{context.formId}@{context.queryKey}" action="@{context.contextUrl}" method="get" hidden="hidden">
+	<input type="text" name="formId" value="@{context.formId}"/>
+	<input type="text" name="queryKey" value="@{context.queryKey}"/>
+	<input type="text" name="httpParams" value="@{context.queryForm.httpParams}"/>
+	<input type="text" name="titleRelation" value="@{context.titleRelation}"/>
+	<input type="text" name="showValueRelation" value="@{context.showValueRelation}"/>
+</form>

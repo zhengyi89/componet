@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+    http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.0.xsd">
+
+	<!-- 数据源 -->
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<property name="driverClassName" value="com.ibm.db2.jcc.DB2Driver" />
+		<property name="url" value="jdbc:db2://172.17.102.8:8004/log" />
+		<property name="username" value="mobilebe" />
+		<property name="password" value="8132430" />
+	</bean>
+
+	<bean id="queryService" class="com.zbjdl.utils.query.impl.QueryServiceImpl">
+		<property name="dataSource" ref="dataSource"/>
+		<property name="querys">
+			<map>
+				<entry key="queryRecharge">
+					<bean class="com.zbjdl.utils.query.Query">
+						<property name="sql">
+							<value>
+							<![CDATA[
+								 select
+								*
+							from
+								 TBL_NOTIFICATION left join TBL_NOTIFY_RULE 
+								 on TBL_NOTIFICATION.NOTIFY_RULE_ID = TBL_NOTIFY_RULE.ID
+							]]>
+							</value>
+						</property>
+
+					</bean>
+				</entry>
+
+				<entry key="queryTestWithNoPage">
+					<bean class="com.zbjdl.utils.query.Query">
+						<property name="sql">
+							<value>
+							<![CDATA[
+							select
+								*
+							from
+								 MOBILEBE.TEST_1 
+							where 
+							1=1
+							/~startDate: and CREATE_DATE between {startDate,DATE}~/
+							/~endDate: and {endDate,DATE}~/
+							]]>
+							</value>
+						</property>
+					</bean>
+				</entry>
+			</map>
+		</property>
+	</bean>
+</beans>

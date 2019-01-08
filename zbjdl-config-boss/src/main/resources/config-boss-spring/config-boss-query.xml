@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+
+	<bean id="queryService" class="com.zbjdl.utils.query.impl.QueryServiceImpl">
+		<property name="dataSource" ref="dataSource"/>
+		<property name="querys">
+			<map>
+				<!-- 查询任务 -->
+				<entry key="queryConfig">
+					<bean class="com.zbjdl.utils.query.Query">
+						<property name="sql">
+							<value>
+								<![CDATA[
+								select c.ID,c.NAMESPACE,c.TYPE,c.CONFIG_KEY,c.VALUE_DATA_TYPE,c.VALUE_TYPE,c.VALUE,c.DESCRIPTION ,c.updatable ,c.deletable , c.update_date_time,c.system_id from CONFIG as c 
+								where 1=1 
+								/~configKey: and c.CONFIG_KEY  like   CONCAT('%',{configKey},'%')  ~/
+								/~namespace: and c.NAMESPACE = {namespace} ~/
+								/~type: and c.TYPE = {type}  ~/
+								/~valueTypeStr: and c.VALUE_TYPE = {valueTypeStr}  ~/
+								
+								
+							]]>
+							</value>
+						</property>
+					</bean>
+				</entry>
+
+			</map>
+		</property>
+	</bean>
+
+</beans>

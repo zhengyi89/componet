@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ConfigNamespace">
+	<insert id="insert" keyProperty="id" useGeneratedKeys="true" parameterType="ConfigNamespace">
+		insert into CONFIG_NAMESPACE(CODE, DESCRIPTION) values(#{code, jdbcType=VARCHAR}, #{description, jdbcType=VARCHAR})
+	</insert>
+
+	<update id="update" parameterType="ConfigNamespace">
+		update CONFIG_NAMESPACE as cn
+		<set>
+			cn.CODE = #{code,jdbcType=VARCHAR},
+			<if test="description !=null and description.trim() != ''">
+				cn.DESCRIPTION = #{description,jdbcType=VARCHAR},
+	 		</if>
+		</set>
+		where cn.ID = #{id}
+	</update>
+
+	<delete id="delete" parameterType="long">
+		delete from CONFIG_NAMESPACE where CODE = #{value}
+	</delete>
+
+	<select id="get" resultType="ConfigNamespace" parameterType="long">
+		select * from CONFIG_NAMESPACE where ID = #{value}
+	</select>
+	<select id="getAll" resultType="ConfigNamespace">
+		select * from CONFIG_NAMESPACE
+	</select>
+
+	<select id="queryByCode" parameterType="string" resultType="ConfigNamespace">
+		select * from CONFIG_NAMESPACE where CODE = #{value}
+	</select>
+</mapper>

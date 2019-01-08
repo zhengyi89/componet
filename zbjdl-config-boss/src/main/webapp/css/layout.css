@@ -1,0 +1,43 @@
+@charset "utf-8";
+/* CSS Document */
+
+html,body,div,ul,ol,li,dl,dt,dd,h1,h2,h3,h4,h5,h6,pre,form,p,blockquote,fieldset,input,select,textarea,del { margin:0; padding:0;}
+body { font-size:12px;font-family: Arial,"宋体"; }
+h1,h2,h3,h4,h5,h6,pre,code,address,caption,cite,code,em,th { font-weight:normal; font-size:100%; }
+fieldset,img,input,textarea { border:0; }
+img, input { vertical-align:middle;}
+table { border-collapse:collapse; border-spacing:0;}
+input, button, textarea, select, optgroup, option {font-family:inherit ;font-size:inherit; font-style:inherit; font-weight:inherit; vertical-align:middle;}
+button, textarea, select {*font-size:100%;}
+ol,ul {list-style:none;}
+
+/************************* <a> ***********************/
+
+a { text-decoration:none; color:#293d6b;}
+a:hover { text-decoration:underline;}
+
+/************************* clear float ***********************/
+
+.clearer { height:0; margin:0; padding:0; line-height:0.01em; font-size:0.01em; display:block; clear:both;}
+.vnone{ display:none;}
+
+/******************<font>*************/
+.fontText{ color:#666;}
+.fontText1{ color:#333}
+
+
+/********Input*******/
+.TextInput{ height:21px; width:135px; line-height:21px; padding-left:3px; border-top:#bdb9b8 solid 1px;  border-left:#bdb9b8 solid 1px; border-right:#d9d7d7 solid 1px; border-bottom:#d9d7d7 solid 1px; color:#666; vertical-align:middle}
+.Hover{ border-top:#9c9795 solid 1px;  border-left:#9c9795 solid 1px; border-right:#b9b6b6 solid 1px; border-bottom:#b9b6b6 solid 1px; }
+.Focus{ border:#0064c6 solid 1px;}
+
+select{ font-size:12px; height:21px; color:#666; vertical-align:middle}
+textarea{ font-size:12px; padding:2px 3px; 
+border-top:#bdb9b8 solid 1px;  border-left:#bdb9b8 solid 1px;  border-right:#d9d7d7 solid 1px; border-bottom:#d9d7d7 solid 1px; color:#666; }
+
+/*************按钮**************/
+a.linkButtonSty{padding:1px 3px;  text-align:center; font-weight:bold; background:#6c8ea9; color:#fff; cursor:pointer; border-right:#547e9f solid 1px; border-bottom:#547e9f solid 1px; }
+a:hover.linkButtonSty{ text-decoration:none; background:#7799b3;}
+.buttonSty{line-height:29px; height:30px;  text-align:center; font-weight:bold; color:#fff; cursor:pointer; border:#50779f solid 1px;}
+.bt2{ width:80px; background:url(../images/templet_ButBg.gif) no-repeat 0 -96px; border:0; }
+.bt2hover{ width:80px; background:url(../images/templet_ButBg.gif) no-repeat 0 -65px; border:0;}

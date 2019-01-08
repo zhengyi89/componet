@@ -1,0 +1,8 @@
+/**
+ * 请求基类
+ */
+/**
+ * @author 
+ *
+ */
+package com.zbjdl.request;

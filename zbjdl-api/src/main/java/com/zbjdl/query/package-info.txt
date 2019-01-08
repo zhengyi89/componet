@@ -1,0 +1,8 @@
+/**
+ * 基础api 查询对象基类
+ */
+/**
+ * @author 
+ *
+ */
+package com.zbjdl.query;

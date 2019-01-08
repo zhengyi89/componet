@@ -1,0 +1,327 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.zbjdl</groupId>
+	<artifactId>zbjdl-dependencies</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<properties>
+		<nexus.url>http://188.131.144.112:9081/nexus</nexus.url>
+
+		<zbjdl-common.version>1.0.0-SNAPSHOT</zbjdl-common.version>
+		<zbjdl-common-utils.version>1.0.0-SNAPSHOT</zbjdl-common-utils.version>
+		<zbjdl-api.version>1.0.0-SNAPSHOT</zbjdl-api.version>
+		<public-api.version>1.0.0-SNAPSHOT</public-api.version>
+		<public-core.version>1.0.0-SNAPSHOT</public-core.version>
+		<zbjdl-sdk.version>1.0.0-SNAPSHOT</zbjdl-sdk.version>
+		<zbjdl-soa.version>1.0.0-SNAPSHOT</zbjdl-soa.version>
+		<zbjdl-event.version>1.0.0-SNAPSHOT</zbjdl-event.version>
+		<zbjdl-query.version>1.0.0-SNAPSHOT</zbjdl-query.version>
+		<zbjdl-cache.version>1.0.0-SNAPSHOT</zbjdl-cache.version>
+		<zbjdl-config.version>1.0.0-SNAPSHOT</zbjdl-config.version>
+		<zbjdl-queryview.version>1.0.0-SNAPSHOT</zbjdl-queryview.version>
+		<zbjdl-repository.version>1.0.0-SNAPSHOT</zbjdl-repository.version>
+		<mer-boss.version>1.0.0-SNAPSHOT</mer-boss.version>
+		<zbjdl-autoconfigure.version>1.0.0-SNAPSHOT</zbjdl-autoconfigure.version>
+		<zbjdl-springboot-starter-dubbo.version>1.0.0-SNAPSHOT</zbjdl-springboot-starter-dubbo.version>
+		<zbjdl-springboot-starter-config.version>1.0.0-SNAPSHOT</zbjdl-springboot-starter-config.version>
+		<zbjdl-springboot-actuator-soa.version>1.0.0-SNAPSHOT</zbjdl-springboot-actuator-soa.version>
+		<zbjdl-ftpclient.version>1.0.0-SNAPSHOT</zbjdl-ftpclient.version>
+		<admin-api.version>1.0.0-SNAPSHOT</admin-api.version>
+		<admin-core.version>1.0.0-SNAPSHOT</admin-core.version>
+		<admin-utils.version>1.0.0-SNAPSHOT</admin-utils.version>
+		<cashier-api.version>1.0.0-SNAPSHOT</cashier-api.version>
+		<cashier-parent.version>1.0.0-SNAPSHOT</cashier-parent.version>
+		<cashier-core.version>1.0.0-SNAPSHOT</cashier-core.version>
+		
+		<weixin-api.version>1.0.0-SNAPSHOT</weixin-api.version>
+		<weixin-core.version>1.0.0-SNAPSHOT</weixin-core.version>
+		<utility-services-api.version>1.0.0-SNAPSHOT</utility-services-api.version>
+
+		<distribute-lock.version>1.0.0-SNAPSHOT</distribute-lock.version>
+		<notifier-parent.version>1.0.0-SNAPSHOT</notifier-parent.version>
+		<log-notifier.version>1.0.0-SNAPSHOT</log-notifier.version>
+		<mail-notifier.version>1.0.0-SNAPSHOT</mail-notifier.version>
+		<notifier-api.version>1.0.0-SNAPSHOT</notifier-api.version>
+		<notifier-core.version>1.0.0-SNAPSHOT</notifier-core.version>
+		<sms-notifier.version>1.0.0-SNAPSHOT</sms-notifier.version>
+		<notifier-cluster.version>1.0.0-SNAPSHOT</notifier-cluster.version>
+
+		<webhook-notifier-parent.version>1.0.0-SNAPSHOT</webhook-notifier-parent.version>
+		<webhook-notifier-api.version>1.0.0-SNAPSHOT</webhook-notifier-api.version>
+		<webhook-notifier-core.version>1.0.0-SNAPSHOT</webhook-notifier-core.version>
+	
+		<meds-api.version>1.0.0-SNAPSHOT</meds-api.version>
+		<meds-core.version>1.0.0-SNAPSHOT</meds-core.version>
+
+		<shield-parent.version>1.0.0-SNAPSHOT</shield-parent.version>
+		<shield-api.version>1.0.0-SNAPSHOT</shield-api.version>
+		<shield-core.version>1.0.0-SNAPSHOT</shield-core.version>
+		<shield-web.version>1.0.0-SNAPSHOT</shield-web.version>
+		
+		<collection-parent.version>1.0.0-SNAPSHOT</collection-parent.version>
+		<collection-api.version>1.0.0-SNAPSHOT</collection-api.version>
+		<collection-core.version>1.0.0-SNAPSHOT</collection-core.version>
+		<collection-web.version>1.0.0-SNAPSHOT</collection-web.version>
+		<collection-boss.version>1.0.0-SNAPSHOT</collection-boss.version>
+		
+		<extgateway-api.version>1.0.0-SNAPSHOT</extgateway-api.version>
+		<extgateway-core.version>1.0.0-SNAPSHOT</extgateway-core.version>
+		
+		<account-api.version>1.0.0-SNAPSHOT</account-api.version>
+		<account-core.version>1.0.0-SNAPSHOT</account-core.version>
+		
+	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+
+			<!-- yunbao dependency begin -->
+			<dependency>
+				<groupId>com.zbjdl.common</groupId>
+				<artifactId>zbjdl-common</artifactId>
+				<version>${zbjdl-common.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.zbjdl.common</groupId>
+				<artifactId>zbjdl-common-utils</artifactId>
+				<version>${zbjdl-common-utils.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.zbjdl.common</groupId>
+				<artifactId>zbjdl-soa</artifactId>
+				<version>${zbjdl-soa.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.zbjdl.api</groupId>
+				<artifactId>zbjdl-api</artifactId>
+				<version>${zbjdl-api.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.zbjdl.public</groupId>
+				<artifactId>public-api</artifactId>
+				<version>${public-api.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.zbjdl.public</groupId>
+				<artifactId>public-core</artifactId>
+				<version>${public-api.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.zbjdl.sdk</groupId>
+				<artifactId>zbjdl-sdk</artifactId>
+				<version>${zbjdl-sdk.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.zbjdl.utils</groupId>
+				<artifactId>zbjdl-query</artifactId>
+				<version>${zbjdl-query.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.zbjdl.utils</groupId>
+				<artifactId>zbjdl-event</artifactId>
+				<version>${zbjdl-event.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.zbjdl.utils</groupId>
+				<artifactId>zbjdl-cache</artifactId>
+				<version>${zbjdl-cache.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.zbjdl.utils</groupId>
+				<artifactId>zbjdl-config</artifactId>
+				<version>${zbjdl-config.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.zbjdl.utils</groupId>
+				<artifactId>zbjdl-queryview</artifactId>
+				<version>${zbjdl-queryview.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.zbjdl.utils</groupId>
+				<artifactId>zbjdl-repository</artifactId>
+				<version>${zbjdl-repository.version}</version>
+			</dependency>
+
+			
+			<dependency>
+				<groupId>com.zbjdl.common.utils</groupId>
+				<artifactId>zbjdl-springboot-autoconfigure</artifactId>
+				<version>${zbjdl-autoconfigure.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.zbjdl.common.utils</groupId>
+				<artifactId>zbjdl-springboot-starter-dubbo</artifactId>
+				<version>${zbjdl-springboot-starter-dubbo.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.zbjdl.common.utils</groupId>
+				<artifactId>zbjdl-springboot-starter-config</artifactId>
+				<version>${zbjdl-springboot-starter-config.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.zbjdl.common.utils</groupId>
+				<artifactId>zbjdl-springboot-actuator-soa</artifactId>
+				<version>${zbjdl-springboot-actuator-soa.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.zbjdl.common.utils</groupId>
+				<artifactId>ftpclient</artifactId>
+				<version>${zbjdl-ftpclient.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.zbjdl.admin</groupId>
+				<artifactId>admin-api</artifactId>
+				<version>${admin-api.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.zbjdl.admin</groupId>
+				<artifactId>admin-core</artifactId>
+				<version>${admin-core.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.zbjdl.admin</groupId>
+				<artifactId>admin-utils</artifactId>
+				<version>${admin-utils.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.zbjdl.cashier</groupId>
+				<artifactId>cashier-api</artifactId>
+				<version>${cashier-api.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.zbjdl.cashier</groupId>
+				<artifactId>cashier-core</artifactId>
+				<version>${cashier-core.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.zbjdl.common.weixin</groupId>
+				<artifactId>weixin-api</artifactId>
+				<version>${weixin-api.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.zbjdl.common.weixin</groupId>
+				<artifactId>weixin-core</artifactId>
+				<version>${weixin-core.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.zbjdl.common.utility</groupId>
+				<artifactId>utility-services-api</artifactId>
+				<version>${utility-services-api.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.zbjdl.common.utils</groupId>
+				<artifactId>distribute-lock</artifactId>
+				<version>${distribute-lock.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.zbjdl.common.notifier</groupId>
+				<artifactId>notifier-api</artifactId>
+				<version>${notifier-api.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.zbjdl.common.notifier</groupId>
+				<artifactId>notifier-core</artifactId>
+				<version>${notifier-core.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.zbjdl.common.notifier</groupId>
+				<artifactId>notifier-cluster</artifactId>
+				<version>${notifier-cluster.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.zbjdl.common.notifier</groupId>
+				<artifactId>sms-notifier</artifactId>
+				<version>${sms-notifier.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.zbjdl.common.notifier</groupId>
+				<artifactId>mail-notifier</artifactId>
+				<version>${mail-notifier.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.zbjdl.common.webhook</groupId>
+				<artifactId>webhook-notifier-api</artifactId>
+				<version>${webhook-notifier-api.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.zbjdl.common.webhook</groupId>
+				<artifactId>webhook-notifier-core</artifactId>
+				<version>${webhook-notifier-core.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.zbjdl.meds</groupId>
+				<artifactId>meds-api</artifactId>
+				<version>${meds-api.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.zbjdl.meds</groupId>
+				<artifactId>meds-core</artifactId>
+				<version>${meds-core.version}</version>
+			</dependency>
+		
+			<dependency>
+				<groupId>com.zbjdl.shield</groupId>
+				<artifactId>shield-api</artifactId>
+				<version>${shield-api.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.zbjdl.shield</groupId>
+				<artifactId>shield-core</artifactId>
+				<version>${shield-core.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.zbjdl.shield</groupId>
+				<artifactId>shield-web</artifactId>
+				<version>${shield-web.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.zbjdl.collection</groupId>
+				<artifactId>collection-api</artifactId>
+				<version>${collection-api.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.zbjdl.collection</groupId>
+				<artifactId>collection-core</artifactId>
+				<version>${collection-core.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.zbjdl.collection</groupId>
+				<artifactId>collection-boss</artifactId>
+				<version>${collection-boss.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.zbjdl.collection</groupId>
+				<artifactId>collection-web</artifactId>
+				<version>${collection-web.version}</version>
+			</dependency>
+			<!-- yunbao dependency end -->
+		</dependencies>
+	</dependencyManagement>
+
+	<build>
+
+	</build>
+
+	<distributionManagement>
+		<repository>
+			<id>releases</id>
+			<name>Nexus Release Repository</name>
+			<url>${nexus.url}/content/repositories/releases/</url>
+		</repository>
+		<snapshotRepository>
+			<id>snapshots</id>
+			<name>Nexus Snapshot Repository</name>
+			<url>${nexus.url}/content/repositories/snapshots/</url>
+		</snapshotRepository>
+	</distributionManagement>
+</project>

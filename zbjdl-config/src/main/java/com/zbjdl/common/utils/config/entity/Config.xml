@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Config">
+	
+  <resultMap type="Config" id="configResult">
+	<id property="id" column="ID" javaType="long" />
+	<result property="namespace" column="NAMESPACE" javaType="string"/>
+	<result property="type" column="TYPE" javaType="string"/>
+	<result property="configKey" column="CONFIG_KEY" javaType="string"/>
+	<result property="valueType" column="VALUE_TYPE" javaType="com.zbjdl.common.utils.config.enumtype.ValueTypeEnum"/>
+	<result property="valueDataType" column="VALUE_DATA_TYPE" javaType="com.zbjdl.common.utils.config.enumtype.ValueDataTypeEnum"/>
+	<!-- <result property="value" column="VALUE" javaType="string"/> -->
+	<!-- 解决mybatis存储blob字段后，出现乱码的问题 -->
+	<result property="value" column="VALUE" typeHandler="com.zbjdl.common.utils.config.utils.ConvertBlobTypeHandler"/>
+
+	<result property="description" column="DESCRIPTION" javaType="string"/>
+	<result property="systemId" column="SYSTEM_ID" javaType="string"/>
+	</resultMap>
+	
+	<resultMap type="Config" id="configResult1" extends="configResult">
+	<result property="updatable" column="UPDATABLE" javaType="boolean"/>
+	<result property="deletable" column="DELETABLE" javaType="boolean"/>
+	</resultMap>
+	
+   <resultMap type="Config" id="configResult2" extends="configResult1">
+	<result property="creatorId" column="CREATOR_ID" javaType="long"/>
+	<result property="createDate" column="CREATE_DATE_TIME" javaType="java.util.Date"/>
+	<result property="updatorId" column="UPDATOR_ID" javaType="long"/>
+	<result property="updateDate" column="UPDATE_DATE_TIME" javaType="java.util.Date"/>
+	</resultMap>
+	<sql id="select" > 
+	  select c.ID,c.NAMESPACE,c.TYPE,c.CONFIG_KEY,c.VALUE_DATA_TYPE,c.VALUE_TYPE,c.VALUE,c.DESCRIPTION from CONFIG as c
+	</sql>
+	<sql id="select1" > 
+	  select c.ID,c.NAMESPACE,c.TYPE,c.CONFIG_KEY,c.VALUE_DATA_TYPE,c.VALUE_TYPE,c.VALUE,c.DESCRIPTION,c.UPDATABLE,c.DELETABLE from CONFIG as c
+	</sql>
+	<sql id="select2">
+	  select * from CONFIG as c
+	</sql>
+	
+	<insert id="insert" keyProperty="id" useGeneratedKeys="true" parameterType="Config">
+	 insert into CONFIG(NAMESPACE,TYPE,CONFIG_KEY,VALUE_DATA_TYPE,VALUE_TYPE,VALUE,UPDATABLE,DELETABLE,
+	 CREATOR_ID,CREATE_DATE_TIME,DESCRIPTION,SYSTEM_ID)
+	  values(#{namespace},#{type},#{configKey},#{valueDataType,jdbcType=VARCHAR},#{valueType,jdbcType=VARCHAR},#{value,jdbcType=CLOB},
+	 #{updatable},#{deletable},#{creatorId,jdbcType=BIGINT},#{createDate},#{description,jdbcType=VARCHAR},#{systemId})
+	</insert>
+	
+	<update id="update" parameterType="Config" >
+	 update CONFIG as c  <set>
+	  <if test="configKey !=null and configKey != ''">
+	 c.CONFIG_KEY=#{configKey,jdbcType=VARCHAR},
+	 </if>
+	  <if test="valueDataType !=null">
+	 c.VALUE_DATA_TYPE=#{valueDataType,jdbcType=VARCHAR},
+	 </if>
+	   <if test="value !=null and value.trim() != ''">
+	  c.VALUE =#{value,jdbcType=CLOB},
+	 </if>
+	   <if test="updatable != null">
+	  c.UPDATABLE =#{updatable},
+	 </if>
+	   <if test="deletable !=null">
+	  c.DELETABLE =#{deletable},
+	 </if>
+	  <if test="description !=null and description.trim() != ''">
+	  c.DESCRIPTION = #{description,jdbcType=VARCHAR},
+	 </if>
+	  <if test="systemId !=null and systemId.trim() != '' and systemId.trim() != '000'">
+	  c.SYSTEM_ID = #{systemId},
+	 </if>
+	 c.UPDATOR_ID = #{updatorId,jdbcType=BIGINT},c.UPDATE_DATE_TIME = #{updateDate,jdbcType=TIMESTAMP}
+	 </set>
+	 where c.ID = #{id}
+	</update>
+	
+	<delete id="delete" parameterType="long" >
+	  delete from  CONFIG where ID = #{value}
+	</delete>
+	
+	<select id="get" resultMap="configResult2" parameterType="long">
+	 <include refid="select2"/> where c.ID = #{value}
+	</select>
+	
+	<select id="queryConfigByKey" parameterType="map" resultMap="configResult">
+	   <include refid="select"/> where c.NAMESPACE=#{namespace} and c.TYPE=#{type} and c.CONFIG_KEY = #{configKey}
+	</select>
+	
+	<select id="queryConfigByNamespace" parameterType="string" resultMap="configResult">
+	  <include refid="select"/> where c.NAMESPACE = #{value}
+	</select>
+	
+	<select id="queryConfigByType" parameterType="string" resultMap="configResult">
+	  <include refid="select"/> where c.TYPE = #{value}
+	</select>
+	
+	<select id="queryConfigByTypes" parameterType="map" resultMap="configResult" >
+	 <include refid="select"/> 
+	 <where>
+	  c.NAMESPACE = #{namespace} 
+	  <if test="types !=null">
+	  and c.TYPE in 
+	  <foreach collection="types" item="type"  separator="," open="(" close=")">
+	  #{type}
+	  </foreach>
+	  </if>
+	 </where>
+	</select>
+	
+	<select id="queryConfig" parameterType="Config" resultMap="configResult2">
+	 <include refid="select2"/> 
+	 <where>
+	 <if test="namespace != null"> and c.NAMESPACE like #{namespace}</if>
+	 <if test="type != null">and c.TYPE like  #{type}</if>
+	 <if test="configKey != null">and c.CONFIG_KEY like  #{configKey}</if>
+	 <if test="valueType != null">and c.VALUE_TYPE = #{valueType}</if>
+	 <if test="systemId != null and systemId.trim() != '' and systemId.trim() != '000'">and c.SYSTEM_ID = #{systemId}</if>
+	 <if test="namespace == null and type == null and configKey == null and valueType == null and systemId == null">and c.ID = -1</if>
+	 </where>   
+	</select>
+	
+</mapper>

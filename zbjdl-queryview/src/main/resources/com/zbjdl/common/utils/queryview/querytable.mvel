@@ -1,0 +1,46 @@
+<table @{context.tableAttrs} >
+@if{!context.hasQueryData()}
+<tr>
+            <td colspan="@{context.titles.size()}">
+               
+                   <div class="content_blank_nodata"><center>@{context.noDataMessage}</center></div>
+              
+            </td>
+        </tr>
+@end{}
+
+@if{!context.titleHiding}
+	<tbody>
+	@if{context.sumListData!=null}
+	
+        <tr>
+            <th colspan="@{context.titles.size()}">
+                @foreach{column : context.sumListData}
+                    @{column.attrs}：@{column.content} @{column.union}<span class="content_blank_15"></span>
+                @end{}
+            </th>
+        </tr>
+	
+	@end{}
+	<tr @{context.titleRowAttrs}>
+	@foreach{titleCell : context.titles}
+		<th @{titleCell.attrs}> 
+		@if{titleCell.sortable && titleCell.isCurrentSortColumn(context.orderby)}
+			<span><a href='javascript:querysort("@{context.formId}","@{context.queryKey}","@{titleCell.orderby}",@{context.orderByAsc == true ?false:true})'>@{titleCell.content} <span class="@{context.orderByAsc == true ?'span_sort_1':'span_sort_2'}"></span></a></span>
+		@else{titleCell.sortable}
+			<span><a href='javascript:querysort("@{context.formId}","@{context.queryKey}","@{titleCell.orderby}",true)'>@{titleCell.content} <span class="span_sort_1"></span></a>
+		@else{}
+			<span>@{titleCell.content}</span>
+		@end{}
+	</th>@end{}</tr>
+	
+	@foreach{row : context.listData}
+		<tr @{row.attrs}>
+			@foreach{cell : row.cells}
+				<td @{cell.attrs}><span @{cell.spanClass}>@{cell.content}</span></td>
+			@end{}
+		</tr>
+	@end{}
+@end{}
+	</tbody>
+</table>

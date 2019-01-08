@@ -1,0 +1,49 @@
+<table @{context.tableAttrs}>
+	<tr>
+	@foreach{titleCell : context.titles}
+		<th @{titleCell.attrs}> 
+		@if{titleCell.sortable && titleCell.isCurrentSortColumn(context.orderby)}
+			<span><a class="@{context.orderByAsc == true ?'span_sort_1':'span_sort_2'}" href='javascript:querysort("@{context.formId}","@{context.queryKey}","@{titleCell.orderby}",@{context.orderByAsc == true ?false:true})'>@{titleCell.content}</a></span>
+		@else{titleCell.sortable}
+			<span><a class="span_sort_1" href='javascript:querysort("@{context.formId}","@{context.queryKey}","@{titleCell.orderby}",true)'>@{titleCell.content}</a></span>
+		@else{}
+			<span>@{titleCell.content}</span>
+		@end{}
+		@if{titleCell.unionable}
+			@foreach{unionTitle : context.unionTitles}
+				@if{titleCell.union == unionTitle.union}
+					@if{unionTitle.sortable && unionTitle.isCurrentSortColumn(context.orderby)}
+						<span><a class="@{context.orderByAsc == true ?'span_sort_1':'span_sort_2'}" href='javascript:querysort("@{context.formId}","@{context.queryKey}","@{unionTitle.orderby}",@{context.orderByAsc == true ?false:true})'>@{unionTitle.content}</a></span>
+					@else{unionTitle.sortable}
+						<span><a class="span_sort_1" href='javascript:querysort("@{context.formId}","@{context.queryKey}","@{unionTitle.orderby}",true)'>@{unionTitle.content}</a></span>
+					@else{}
+						<span>@{unionTitle.content}</span>
+					@end{}
+				@end{}
+			@end{}
+		@end{}
+	</th>@end{}</tr>
+</table>
+
+@foreach{row : context.listData}
+	<table class="table_info">
+		@foreach{titleCell : context.titles}
+			<col />
+		@end{}
+		<tr @{row.attrs}>
+			@foreach{cell : row.cells}
+				@if{cell.unionable}
+					<td @{cell.attrs}><span @{cell.spanClass}>@if{cell.content == null || cell.content == ""}&nbsp;@else{}@{cell.content}@end{}</span>
+					@foreach{unionCell : row.unionCells}
+						@if{cell.union == unionCell.union}
+							<span @{unionCell.spanClass}>@if{unionCell.content == null || unionCell.content == ""}&nbsp;@else{}@{unionCell.content}@end{}</span>
+						@end{}
+					@end{}
+					</td>
+				@else{}
+					<td @{cell.attrs}><span @{cell.spanClass}>@{cell.content}</span></td>
+				@end{}
+			@end{}
+		</tr>
+	</table>
+@end{}

@@ -1,0 +1,22 @@
+spring:
+    profiles:
+        active: development
+# REDIS (RedisProperties)
+    redis:
+        host: redis.zbjdl.in
+        port: 6379
+        pool:
+            max-idle: 300 # pool settings ...
+            max-active: 600
+            max-wait: 1000
+
+---
+
+spring:
+    profiles: development
+
+---
+
+spring:
+    profiles: production
+

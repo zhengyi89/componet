@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<tableRules>
+  
+<tableRule name="TEST_1" schema="MOBILEBE">
+   
+  
+     
+   <rule name="rule3">
+      <parameters>CREATE_DATE</parameters>
+      <expression><![CDATA[ CREATE_DATE between to_date('2011-12-01 00:00:00') and to_date('2011-12-07 00:00:00') ]]></expression>
+      <suffix>_001</suffix>
+      <dataSource>ds1</dataSource>
+   </rule>
+   <rule name="rule4">
+      <parameters>CREATE_DATE</parameters>
+      <expression><![CDATA[ CREATE_DATE between to_date('2011-12-07 00:00:00') and to_date('2011-12-10 00:00:00') ]]></expression>
+      <suffix>_002</suffix>
+      <dataSource>ds1</dataSource>
+   </rule>
+   <rule name="rule5">
+      <parameters>CREATE_DATE</parameters>
+      <expression><![CDATA[ CREATE_DATE between to_date('2011-12-11 00:00:00') and to_date('2011-12-20 00:00:00') ]]></expression>
+      <suffix>_003</suffix>
+      <dataSource>ds1</dataSource>
+   </rule>
+  
+</tableRule>
+
+
+<tableRule name="TEST_TABLE" schema="MOBILEBE">
+   <rule name="rule1">
+      <parameters>CREATE_DATE</parameters>
+      <expression><![CDATA[ CREATE_DATE between to_date('2011-12-01 00:00:00') and to_date('2011-12-07 00:00:00') ]]></expression>
+      <suffix>_001</suffix>
+      <dataSource>ds1</dataSource>
+   </rule>
+   <rule name="rule2">
+      <parameters>CREATE_DATE</parameters>
+      <expression><![CDATA[ CREATE_DATE between to_date('2011-12-07 00:00:00') and to_date('2011-12-10 00:00:00') ]]></expression>
+      <suffix>_002</suffix>
+      <dataSource>ds1</dataSource>
+   </rule>
+   <rule name="rule3">
+      <parameters>CREATE_DATE</parameters>
+      <expression><![CDATA[ CREATE_DATE between to_date('2011-12-11 00:00:00') and to_date('2011-12-20 00:00:00') ]]></expression>
+      <suffix>_003</suffix>
+      <dataSource>ds1</dataSource>
+   </rule>
+</tableRule>
+
+<!--  
+<tableRule name="account" schema="test">
+   <rule name="rule1">
+      <parameters>No</parameters>
+      <expression><![CDATA[ lastString(No,3) mod 2 = 0 ]]></expression>
+      <dataSource>ds1</dataSource>
+   </rule>
+   <rule name="rule2">
+     <parameters>No</parameters>
+     <expression><![CDATA[ lastString(No,3) mod 2 = 1 ]]></expression>
+     <dataSource>ds1</dataSource>
+   </rule>
+</tableRule>
+-->
+
+
+</tableRules>

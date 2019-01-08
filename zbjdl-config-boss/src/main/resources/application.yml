@@ -1,0 +1,70 @@
+spring:
+    profiles:
+        active: default
+    mvc:
+        view:
+            prefix: /WEB-INF/views/
+            suffix: .jsp
+    datasource:
+        driverClassName: com.mysql.jdbc.Driver
+        url: jdbc:mysql://mysqldb.zbjdl.in/zbjdl_config?useUnicode=true&characterEncoding=utf8&autoReconnect=true
+        username: root
+        password: wK=QwJmR<592
+        validation-query: select 1 from dual
+        test-on-borrow: true
+
+    messages:
+        basename: messages
+endpoints:
+    jmx:
+        enabled: false 
+
+mybatis:
+    config: classpath:config-spring/mybatis-config.xml
+    
+server:
+    contextPath: /zbjdl-config-boss
+    port: 8081
+
+logging:
+    level:
+        com:
+            zbjdl:
+                utils:
+                    query: DEBUG
+
+zbjdl:
+    dubbo:
+        app: config-boss
+        registry_address: registry.zbjdl.in:2181
+
+---
+
+spring:
+    profiles: development
+    
+    datasource:
+        driverClassName: com.mysql.jdbc.Driver
+        url: jdbc:mysql://mysqldb.zbjdl.in/zbjdl_config?useUnicode=true&characterEncoding=utf8&autoReconnect=true
+        username: root
+        password: wK=QwJmR<592
+        validation-query: select 1 from dual
+        test-on-borrow: true
+
+
+server:
+    port: 8080
+
+---
+spring:
+    profiles: production
+    datasource:
+        driverClassName: com.mysql.jdbc.Driver
+        url: jdbc:mysql://mysqldb.zbjdl.in/zbjdl_config?useUnicode=true&characterEncoding=utf8&autoReconnect=true
+        username: root
+        password: qr0?mFD7glkr
+        validation-query: select 1 from dual
+        test-on-borrow: true
+
+server:
+    port: 9023

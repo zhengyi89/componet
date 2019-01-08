@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ConfigVersion">
+	
+  <resultMap type="ConfigVersion" id="configVersionResult">
+	<id property="id" column="ID" javaType="long" />
+	<result property="type" column="TYPE" javaType="string"/>
+	<result property="version" column="VERSION" javaType="int"/>
+	</resultMap>
+	
+<insert id="insert" keyProperty="id" useGeneratedKeys="true" parameterType="ConfigVersion">
+	 insert into CONFIG_VERSION(TYPE,VERSION) values(#{type},#{version})
+	</insert>
+	
+	<update id="update" parameterType="ConfigVersion" >
+	 update CONFIG_VERSION set VERSION = #{version}+1 where ID = #{id}
+	</update>
+	
+	<delete id="delete" parameterType="long" >
+	  delete from  CONFIG_VERSION where ID = #{value}
+	</delete>
+	<select id="getAll" resultMap="configVersionResult">
+	   select * from  CONFIG_VERSION
+	</select>
+	<select id="queryByTypes" parameterType="map" resultMap="configVersionResult">
+	  select * from CONFIG_VERSION where TYPE in 
+	  <foreach collection="types" item="type"  open="(" separator="," close=")">
+	      #{type}
+	  </foreach>  
+	</select>
+	
+	<select id="queryByType" parameterType="string" resultMap="configVersionResult">
+	  select * from CONFIG_VERSION where TYPE = #{value}
+	</select>
+</mapper>
