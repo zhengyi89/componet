@@ -566,5 +566,13 @@ public class QueryUIContext {
 		this.showValueRelation = showValueRelation;
 	}
 
+	public Map<String, Object> getPreparedParamsStr() {
+		Map<String, Object> map = new HashMap<String, Object>();
+		for (PreparedParamBean bean : this.preparedParams) {
+			map.put(bean.getName(), bean.getValue());
+		}
+		return map;
+	}
+
 
 }

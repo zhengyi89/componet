@@ -9,4 +9,5 @@
 	<input type="text" name="httpParams" value="@{context.queryForm.httpParams}"/>
 	<input type="text" name="titleRelation" value="@{context.titleRelation}"/>
 	<input type="text" name="showValueRelation" value="@{context.showValueRelation}"/>
+	<input type="text" name="preparedParamsStr" value="@{context.preparedParamsStr}"/>
 </form>

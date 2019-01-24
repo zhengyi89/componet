@@ -31,6 +31,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import com.zbjdl.common.utils.config.TextResource;
 import com.zbjdl.common.utils.queryview.QueryForm;
 import com.zbjdl.common.utils.queryview.QueryViewApplicationContextHelper;
+import com.zbjdl.common.utils.queryview.tags.bean.PreparedParamBean;
 import com.zbjdl.utils.query.QueryParam;
 import com.zbjdl.utils.query.QueryService;
 
@@ -100,6 +101,7 @@ public class ExportDataHandlerInterceptor extends HandlerInterceptorAdapter {
 
 		Map<String, Object> httpParams = new HashMap<String, Object>();
 		String params = request.getParameter("httpParams");
+		
 		params = params.substring(1, params.length() - 1);
 
 		for (int i = 0; i < params.split(",").length; i++) {
@@ -112,7 +114,19 @@ public class ExportDataHandlerInterceptor extends HandlerInterceptorAdapter {
 			httpParams.put(key, value);
 		}
 
+		// 增加prepareParam
+		String prepareParams  = request.getParameter("preparedParamsStr");
+		prepareParams = prepareParams.substring(1, prepareParams.length() - 1);
 		
+		for (int i = 0; i < prepareParams.split(",").length; i++) {
+			String key = prepareParams.split(",")[i].split("=")[0].toString().trim();
+
+			String value = "";
+			if (prepareParams.split(",")[i].split("=").length > 1) {
+				value = prepareParams.split(",")[i].split("=")[1].toString();
+			}
+			httpParams.put(key, value);
+		}
 
 		// 写入文件
 		long starTime = System.currentTimeMillis();
