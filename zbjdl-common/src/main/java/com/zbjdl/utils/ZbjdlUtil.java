@@ -3,7 +3,7 @@ package com.zbjdl.utils;
 import java.text.DecimalFormat;
 import java.util.Arrays;
 
-public class HengBaoUtil {
+public class ZbjdlUtil {
 	/**
 	 * 将数字格式化成固定长度的字符串
 	 * @param decimal

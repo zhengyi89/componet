@@ -8,7 +8,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 
-import com.zbjdl.date.HengbaoDateUtil;
+import com.zbjdl.date.ZbjdlDateUtil;
 
 
 public class MainTest {
@@ -32,7 +32,7 @@ public class MainTest {
 //		Thread.sleep(1000);
 		Date now1 = new Date();
 		
-		System.out.println(HengbaoDateUtil.compareDateTime(now1, now));
+		System.out.println(ZbjdlDateUtil.compareDateTime(now1, now));
 		
 		logger.info("记录日志测试");
 	}

@@ -36,8 +36,8 @@
 		</property>
 	</bean>
 	
-	<bean id="redisAccountNoCreator" class="com.hengbao.common.RedisAccountNoCreator"></bean>
-	<bean id="redisIdGenerator" class="com.hengbao.common.RedisIdGenerator"></bean>
-	<bean id="redisCache" class="com.hengbao.cache.RedisCache"></bean>
-	<bean id="redisLock" class="com.hengbao.common.RedisLock"></bean>
+	<bean id="redisAccountNoCreator" class="com.zbjdl.common.RedisAccountNoCreator"></bean>
+	<bean id="redisIdGenerator" class="com.zbjdl.common.RedisIdGenerator"></bean>
+	<bean id="redisCache" class="com.zbjdl.cache.RedisCache"></bean>
+	<bean id="redisLock" class="com.zbjdl.common.RedisLock"></bean>
 </beans>

@@ -6,7 +6,7 @@ import java.util.Date;
 
 import org.joda.time.DateTime;
 
-public class HengbaoDateUtil {
+public class ZbjdlDateUtil {
 	/**
 	 * 比较日期大小
 	 * @param largeDt
@@ -136,7 +136,7 @@ public class HengbaoDateUtil {
 		Calendar c = Calendar.getInstance();
 		c.add(Calendar.MONTH, 0);
 		c.set(Calendar.DAY_OF_MONTH, 1);
-		return HengbaoDateUtil.getDayZeroTime(c.getTime());
+		return ZbjdlDateUtil.getDayZeroTime(c.getTime());
 	}
 	
 	/**
@@ -146,7 +146,7 @@ public class HengbaoDateUtil {
 	public static final Date getTimesMonthNight() {
 		Calendar ca = Calendar.getInstance();    
         ca.set(Calendar.DAY_OF_MONTH, ca.getActualMaximum(Calendar.DAY_OF_MONTH));  
-		return HengbaoDateUtil.getDayFinalTime(ca.getTime());
+		return ZbjdlDateUtil.getDayFinalTime(ca.getTime());
 	}
 	
 	/**

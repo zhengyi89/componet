@@ -8,7 +8,7 @@
 	</parent>
 	<groupId>com.zbjdl.common</groupId>
 	<artifactId>zbjdl-common</artifactId>
-	<version>${zbjdl-common.version}</version>
+	<version>1.0.0-SNAPSHOT</version>
 
 	<dependencies>
 		<dependency>

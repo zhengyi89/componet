@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
-import com.zbjdl.date.HengbaoDateUtil;
-import com.zbjdl.utils.HengBaoUtil;
+import com.zbjdl.date.ZbjdlDateUtil;
+import com.zbjdl.utils.ZbjdlUtil;
 @Component("redisIdGenerator")
 public class RedisIdGenerator {
 	
@@ -69,21 +69,21 @@ public class RedisIdGenerator {
 	
 	public String createAccountingNo(){
 		Date date = new Date();
-		String minuteStr = HengbaoDateUtil.getMinuteTime(date);
+		String minuteStr = ZbjdlDateUtil.getMinuteTime(date);
 		Long number = redisTemplate.opsForValue().increment(ACCOUNTING_KEY_PREFIX + minuteStr, 1l);
 		redisTemplate.expire(ACCOUNTING_KEY_PREFIX + minuteStr, 1, TimeUnit.MINUTES);
 		
-		return minuteStr + HengBaoUtil.formatDecimal(number,ID_FORMAT);
+		return minuteStr + ZbjdlUtil.formatDecimal(number,ID_FORMAT);
 	}
 	
 	
 	public String createCouponId(){
 		Date date = new Date();
-		String minuteStr = HengbaoDateUtil.getMinuteTime(date);
+		String minuteStr = ZbjdlDateUtil.getMinuteTime(date);
 		Long number = redisTemplate.opsForValue().increment(ACCOUNTING_KEY_PREFIX + minuteStr, 1l);
 		redisTemplate.expire(ACCOUNTING_KEY_PREFIX + minuteStr, 1, TimeUnit.MINUTES);
 		
-		return minuteStr + HengBaoUtil.formatDecimal(number,ID_FORMAT);
+		return minuteStr + ZbjdlUtil.formatDecimal(number,ID_FORMAT);
 	}
 	
 	/**
@@ -92,11 +92,11 @@ public class RedisIdGenerator {
 	 */
 	public String createBocGatewayNo(){
 		Date date = new Date();
-		String dayStr = HengbaoDateUtil. getDayTime(date);
+		String dayStr = ZbjdlDateUtil. getDayTime(date);
 		Long number = redisTemplate.opsForValue().increment(BOC_GATEWAY_KEY_PREFIX + dayStr, 1l);
 		redisTemplate.expire(BOC_GATEWAY_KEY_PREFIX + dayStr, 1, TimeUnit.DAYS);
 		
-		return dayStr + HengBaoUtil.formatDecimal(number,SIX_FORMAT);
+		return dayStr + ZbjdlUtil.formatDecimal(number,SIX_FORMAT);
 	}
 	
 	/**
@@ -104,11 +104,11 @@ public class RedisIdGenerator {
 	 */
 	public String createBocRefundNo(){
 		Date date = new Date();
-		String dayStr = HengbaoDateUtil. getDayTime(date);
+		String dayStr = ZbjdlDateUtil. getDayTime(date);
 		Long number = redisTemplate.opsForValue().increment(BOC_REFUND_KEY_PREFIX + dayStr, 1l);
 		redisTemplate.expire(BOC_REFUND_KEY_PREFIX + dayStr, 1, TimeUnit.DAYS);
 		
-		return dayStr + HengBaoUtil.formatDecimal(number,SIX_FORMAT);
+		return dayStr + ZbjdlUtil.formatDecimal(number,SIX_FORMAT);
 	}
 	
 	/**
@@ -117,139 +117,37 @@ public class RedisIdGenerator {
 	 */
 	public String createCMBCBatchGatewayNo(){
 		Date date = new Date();
-		String dayStr = HengbaoDateUtil. getDayTime(date);
+		String dayStr = ZbjdlDateUtil. getDayTime(date);
 		Long number = redisTemplate.opsForValue().increment(CMBC_BATCH_GATEWAY_KEY_PREFIX + dayStr, 1l);
 		redisTemplate.expire(CMBC_BATCH_GATEWAY_KEY_PREFIX + dayStr, 1, TimeUnit.DAYS);
 		
-		return dayStr + HengBaoUtil.formatDecimal(number,THREE_FORMAT);
+		return dayStr + ZbjdlUtil.formatDecimal(number,THREE_FORMAT);
 	}
 	
-	/*
-	*//**
-	 * 单笔请求号
-	 * @return
-	 *//*
-	public String createRequestNo(){
-		Date date = new Date();
-		String secondStr = HengbaoDateUtil.getSecondTime(date);
-		Long number = redisTemplate.opsForValue().increment(REQUEST_KEY_PREFIX + secondStr, 1l);
-		redisTemplate.expire(REQUEST_KEY_PREFIX + secondStr, 1, TimeUnit.SECONDS);
-		
-		return secondStr + HengBaoUtil.formatDecimal(number,NO_FORMAT);
-	}
-	
-	*//**
-	 * 批次请求号
-	 * @return
-	 *//*
-	public String createBatchRequestNo(){
-		Date date = new Date();
-		String minuteStr= HengbaoDateUtil.getMinuteTime(date);
-		Long number = redisTemplate.opsForValue().increment(REQUEST_KEY_PREFIX + minuteStr, 1l);
-		redisTemplate.expire(REQUEST_KEY_PREFIX + minuteStr, 1, TimeUnit.MINUTES);
-		
-		return minuteStr + HengBaoUtil.formatDecimal(number,BATCH_FORMAT);
-	}
-	
-	*//**
-	 * 网关单笔请求号
-	 * @return
-	 *//*
-	public String createGwPayFlowNo(){
-		Date date = new Date();
-		String secondStr= HengbaoDateUtil.getSecondTime(date);
-		Long number = redisTemplate.opsForValue().increment(GATEWAY_KEY_PREFIX + secondStr, 1l);
-		redisTemplate.expire(GATEWAY_KEY_PREFIX + secondStr, number, TimeUnit.SECONDS);
-		String gwPayFlowNo = secondStr + HengBaoUtil.formatDecimal(number,NO_FORMAT);
-		return gwPayFlowNo;
-	}
-	*/
 	/**
 	 * 网关批次请求号
 	 * @return
 	 */
 	public String createGwBatchPayNo(){
 		Date date = new Date();
-		String minuteStr= HengbaoDateUtil.getMinuteTime(date);
+		String minuteStr= ZbjdlDateUtil.getMinuteTime(date);
 		Long number = redisTemplate.opsForValue().increment(GATEWAY_KEY_PREFIX + minuteStr, 1l);
 		redisTemplate.expire(GATEWAY_KEY_PREFIX + minuteStr, 1, TimeUnit.MINUTES);
 		
-		return minuteStr + HengBaoUtil.formatDecimal(number,BATCH_FORMAT);
+		return minuteStr + ZbjdlUtil.formatDecimal(number,BATCH_FORMAT);
 	}
-//	
-//	/**
-//	 * 提现流水号
-//	 * @return
-//	 */
-//	public String tiXianFlowNo(){
-//		Date date = new Date();
-//		String minuteStr= HengbaoDateUtil.getMinuteTime(date);
-//		Long number = redisTemplate.opsForValue().increment(TIXIAN_KEY_PREFIX + minuteStr, 1l);
-//		redisTemplate.expire(TIXIAN_KEY_PREFIX + minuteStr, 1, TimeUnit.MINUTES);
-//		
-//		return minuteStr + HengBaoUtil.formatDecimal(number,TIXIAN_FORMAT);
-//	}
-//	/**
-//	 * 放款流水号
-//	 * @return
-//	 */
-//	public String fangKuanFlowNo(){
-//		Date date = new Date();
-//		String minuteStr= HengbaoDateUtil.getMinuteTime(date);
-//		Long number = redisTemplate.opsForValue().increment(FANGKUAN_KEY_PREFIX + minuteStr, 1l);
-//		redisTemplate.expire(FANGKUAN_KEY_PREFIX + minuteStr, 1, TimeUnit.MINUTES);
-//		
-//		return minuteStr + HengBaoUtil.formatDecimal(number,FANGKUAN_FORMAT);
-//	}
-//	/**
-//	 * 还款流水号
-//	 * @return
-//	 */
-//	public String huanKuanFlowNo(){
-//		Date date = new Date();
-//		String minuteStr= HengbaoDateUtil.getMinuteTime(date);
-//		Long number = redisTemplate.opsForValue().increment(HUANKUAN_KEY_PREFIX + minuteStr, 1l);
-//		redisTemplate.expire(HUANKUAN_KEY_PREFIX + minuteStr, 1, TimeUnit.MINUTES);
-//		
-//		return minuteStr + HengBaoUtil.formatDecimal(number,HUANKUAN_FORMAT);
-//	}
-//	/**
-//	 * 开户流水号
-//	 * @return
-//	 */
-//	public String kaiHuFlowNo(){
-//		Date date = new Date();
-//		String minuteStr= HengbaoDateUtil.getMinuteTime(date);
-//		Long number = redisTemplate.opsForValue().increment(KAIHU_KEY_PREFIX + minuteStr, 1l);
-//		redisTemplate.expire(KAIHU_KEY_PREFIX + minuteStr, 1, TimeUnit.MINUTES);
-//		
-//		return minuteStr + HengBaoUtil.formatDecimal(number,KAIHU_FORMAT);
-//	}
 	/**
 	 * 开户流水号
 	 * @return
 	 */
 	public String  contractNo(){
 		Date date = new Date();
-		String minuteStr= HengbaoDateUtil.getMinuteTime(date);
+		String minuteStr= ZbjdlDateUtil.getMinuteTime(date);
 		Long number = redisTemplate.opsForValue().increment( CONTRACT_KEY_PREFIX + minuteStr, 1l);
 		redisTemplate.expire( CONTRACT_KEY_PREFIX + minuteStr, 1, TimeUnit.MINUTES);
 		
-		return minuteStr + HengBaoUtil.formatDecimal(number, CONTRACT_FORMAT);
+		return minuteStr + ZbjdlUtil.formatDecimal(number, CONTRACT_FORMAT);
 	}
-//	
-//	/**
-//	 * 红包交易流水号
-//	 * @return
-//	 */
-//	public String couponFlowNo(){
-//		Date date = new Date();
-//		String minuteStr= HengbaoDateUtil.getMinuteTime(date);
-//		Long number = redisTemplate.opsForValue().increment( COUPON_KEY_PREFIX + minuteStr, 1l);
-//		redisTemplate.expire( COUPON_KEY_PREFIX + minuteStr, 1, TimeUnit.MINUTES);
-//		
-//		return minuteStr + HengBaoUtil.formatDecimal(number, COUPON_FORMAT);
-//	}
 	
 	
 	/**
@@ -258,11 +156,11 @@ public class RedisIdGenerator {
 	 */
 	public String createAccountId(){
 		Date date = new Date();
-		String secondStr = HengbaoDateUtil.getSecondTime(date);
+		String secondStr = ZbjdlDateUtil.getSecondTime(date);
 		Long number = redisTemplate.opsForValue().increment(ACCOUNT_KEY_PREFIX + secondStr, 1l);
 		redisTemplate.expire(ACCOUNT_KEY_PREFIX + secondStr, 1, TimeUnit.SECONDS);
 		
-		return secondStr + HengBaoUtil.formatDecimal(number, FOUR_FORMAT);
+		return secondStr + ZbjdlUtil.formatDecimal(number, FOUR_FORMAT);
 	}
 	
 	/**
@@ -271,11 +169,11 @@ public class RedisIdGenerator {
 	 */
 	public String createPay16Id(){
 		Date date = new Date();
-		String secondStr = HengbaoDateUtil.getSecondTime(date).substring(2);
+		String secondStr = ZbjdlDateUtil.getSecondTime(date).substring(2);
 		Long number = redisTemplate.opsForValue().increment(PAY_KEY_PREFIX_16 + secondStr, 1l);
 		redisTemplate.expire(PAY_KEY_PREFIX_16 + secondStr, 1, TimeUnit.SECONDS);
 		
-		return secondStr + HengBaoUtil.formatDecimal(number, FOUR_FORMAT);
+		return secondStr + ZbjdlUtil.formatDecimal(number, FOUR_FORMAT);
 	}
 	
 	/**
@@ -284,11 +182,11 @@ public class RedisIdGenerator {
 	 */
 	public String createRequestNo(){
 		Date date = new Date();
-		String minuteStr = HengbaoDateUtil.getMinuteTime(date);
+		String minuteStr = ZbjdlDateUtil.getMinuteTime(date);
 		Long number = redisTemplate.opsForValue().increment(REQUEST_KEY_PREFIX + minuteStr, 1l);
 		redisTemplate.expire(REQUEST_KEY_PREFIX + minuteStr, 1, TimeUnit.MINUTES);
 		
-		return minuteStr + HengBaoUtil.formatDecimal(number, FIVE_FORMAT);
+		return minuteStr + ZbjdlUtil.formatDecimal(number, FIVE_FORMAT);
 	}
 	
 	/**
@@ -297,11 +195,11 @@ public class RedisIdGenerator {
 	 */
 	public String createBatchRequestNo(){
 		Date date = new Date();
-		String minuteStr= HengbaoDateUtil.getMinuteTime(date);
+		String minuteStr= ZbjdlDateUtil.getMinuteTime(date);
 		Long number = redisTemplate.opsForValue().increment(BATCH_KEY_PREFIX + minuteStr, 1l);
 		redisTemplate.expire(BATCH_KEY_PREFIX + minuteStr, 1, TimeUnit.MINUTES);
 		
-		return minuteStr + HengBaoUtil.formatDecimal(number, FIVE_FORMAT);
+		return minuteStr + ZbjdlUtil.formatDecimal(number, FIVE_FORMAT);
 	}
 	
 	
@@ -311,11 +209,11 @@ public class RedisIdGenerator {
 	 */
 	public String createBatchPayNo(){
 		Date date = new Date();
-		String secondStr= HengbaoDateUtil.getSecondTime(date);
+		String secondStr= ZbjdlDateUtil.getSecondTime(date);
 		Long number = redisTemplate.opsForValue().increment(GATEWAY_KEY_PREFIX + secondStr, 1l);
 		redisTemplate.expire(GATEWAY_KEY_PREFIX + secondStr, 5, TimeUnit.SECONDS);
 		
-		return "b" +  secondStr + HengBaoUtil.formatDecimal(number, FOUR_FORMAT);
+		return "b" +  secondStr + ZbjdlUtil.formatDecimal(number, FOUR_FORMAT);
 	}
 	
 	/**
@@ -324,11 +222,11 @@ public class RedisIdGenerator {
 	 */
 	public String createGwPayFlowNo(){
 		Date date = new Date();
-		String secondStr= HengbaoDateUtil.getSecondTime(date);
+		String secondStr= ZbjdlDateUtil.getSecondTime(date);
 		Long number = redisTemplate.opsForValue().increment(GATEWAY_KEY_PREFIX + secondStr, 1l);
 		redisTemplate.expire(GATEWAY_KEY_PREFIX + secondStr, 5, TimeUnit.SECONDS);
 		
-		return "gw" +  secondStr + HengBaoUtil.formatDecimal(number, FIVE_FORMAT);
+		return "gw" +  secondStr + ZbjdlUtil.formatDecimal(number, FIVE_FORMAT);
 	}
 	
 	/**
@@ -337,11 +235,11 @@ public class RedisIdGenerator {
 	 */
 	public String createOrderNo(){
 		Date date = new Date();
-		String minuteStr= HengbaoDateUtil.getMinuteTime(date);
+		String minuteStr= ZbjdlDateUtil.getMinuteTime(date);
 		Long number = redisTemplate.opsForValue().increment(ORDER_KEY_PREFIX + minuteStr, 1l);
 		redisTemplate.expire(ORDER_KEY_PREFIX + minuteStr, 1, TimeUnit.MINUTES);
 		
-		return "o" + minuteStr + HengBaoUtil.formatDecimal(number,FIVE_FORMAT);
+		return "o" + minuteStr + ZbjdlUtil.formatDecimal(number,FIVE_FORMAT);
 	}
 	
 	/**
@@ -350,11 +248,11 @@ public class RedisIdGenerator {
 	 */
 	public String createTransFlowNo(){
 		Date date = new Date();
-		String minuteStr= HengbaoDateUtil.getMinuteTime(date);
+		String minuteStr= ZbjdlDateUtil.getMinuteTime(date);
 		Long number = redisTemplate.opsForValue().increment(FLOW_KEY_PREFIX + minuteStr, 1l);
 		redisTemplate.expire(FLOW_KEY_PREFIX + minuteStr, 1, TimeUnit.MINUTES);
 		
-		return "t" + minuteStr + HengBaoUtil.formatDecimal(number,SEVEN_FORMAT);
+		return "t" + minuteStr + ZbjdlUtil.formatDecimal(number,SEVEN_FORMAT);
 	}
 	
 	
@@ -364,11 +262,11 @@ public class RedisIdGenerator {
 	 */
 	public String createPayFlowNo(){
 		Date date = new Date();
-		String minuteStr= HengbaoDateUtil.getMinuteTime(date);
+		String minuteStr= ZbjdlDateUtil.getMinuteTime(date);
 		Long number = redisTemplate.opsForValue().increment(PAY_KEY_PREFIX + minuteStr, 1l);
 		redisTemplate.expire(PAY_KEY_PREFIX + minuteStr, 1, TimeUnit.MINUTES);
 		
-		return "p" + minuteStr + HengBaoUtil.formatDecimal(number,SIX_FORMAT);
+		return "p" + minuteStr + ZbjdlUtil.formatDecimal(number,SIX_FORMAT);
 	}
 	public String createCmbcOutPayFileNo() {
 		return "";
@@ -388,7 +286,7 @@ public class RedisIdGenerator {
 		Long number = redisTemplate.opsForValue().increment(PAY_KEY_PREFIX + minuteStr, 1l);
 		redisTemplate.expire(PAY_KEY_PREFIX + minuteStr, 1, TimeUnit.MINUTES);
 		
-		return  minuteStr + HengBaoUtil.formatDecimal(number,FOUR_FORMAT);
+		return  minuteStr + ZbjdlUtil.formatDecimal(number,FOUR_FORMAT);
 	}
 	
 	/**
@@ -398,11 +296,11 @@ public class RedisIdGenerator {
 	public String createDrawingNo()
 	{
 		Date date = new Date();
-		String minuteStr = HengbaoDateUtil.getMinuteTime(date);
+		String minuteStr = ZbjdlDateUtil.getMinuteTime(date);
 		Long number = redisTemplate.opsForValue().increment(DRAWING + minuteStr, 1l);
 		redisTemplate.expire(DRAWING + minuteStr, 1, TimeUnit.MINUTES);
 		
-		return  minuteStr + HengBaoUtil.formatDecimal(number,FOUR_FORMAT);
+		return  minuteStr + ZbjdlUtil.formatDecimal(number,FOUR_FORMAT);
 	}
 	/**
 	 * 提款流水号
@@ -411,7 +309,7 @@ public class RedisIdGenerator {
 	public String createMerchantCode()
 	{
 		Date date = new Date();
-		String minuteStr= HengbaoDateUtil.getMinuteTime(date);
+		String minuteStr= ZbjdlDateUtil.getMinuteTime(date);
 		Long number = redisTemplate.opsForValue().increment(MERCHANT + minuteStr, 1l);
 		redisTemplate.expire(MERCHANT + minuteStr, 1, TimeUnit.MINUTES);
 		
@@ -423,11 +321,11 @@ public class RedisIdGenerator {
 	 */
 	public String createRefundFlowNo(){
 		Date date = new Date();
-		String minuteStr= HengbaoDateUtil.getMinuteTime(date);
+		String minuteStr= ZbjdlDateUtil.getMinuteTime(date);
 		Long number = redisTemplate.opsForValue().increment(FLOW_KEY_PREFIX + minuteStr, 1l);
 		redisTemplate.expire(FLOW_KEY_PREFIX + minuteStr, 1, TimeUnit.MINUTES);
 		
-		return REFUND + minuteStr + HengBaoUtil.formatDecimal(number,SEVEN_FORMAT);
+		return REFUND + minuteStr + ZbjdlUtil.formatDecimal(number,SEVEN_FORMAT);
 	}
 	
 	/**
@@ -439,14 +337,14 @@ public class RedisIdGenerator {
 		String dayStr = new DateTime(date).toString("YYMMdd");
 		Long number = redisTemplate.opsForValue().increment(dayStr + PLAT_CODE, 1l);
 		redisTemplate.expire(dayStr + PLAT_CODE, 1, TimeUnit.DAYS);
-		return  dayStr + PLAT_CODE + HengBaoUtil.formatDecimal(number,SIX_FORMAT) + new DateTime(date).toString("mmss");
+		return  dayStr + PLAT_CODE + ZbjdlUtil.formatDecimal(number,SIX_FORMAT) + new DateTime(date).toString("mmss");
 	}
 	
 	public String createSzpaGatewayNo(){
 		Date date = new Date();
-		String secondStr = HengbaoDateUtil.getSecondTime(date);
+		String secondStr = ZbjdlDateUtil.getSecondTime(date);
 		Long number = redisTemplate.opsForValue().increment(SZPA_GATEWAY + secondStr, 1l);
 		redisTemplate.expire(SZPA_GATEWAY + secondStr, 1, TimeUnit.SECONDS);
-		return secondStr + HengBaoUtil.formatDecimal(number, SIX_FORMAT);
+		return secondStr + ZbjdlUtil.formatDecimal(number, SIX_FORMAT);
 	}
 }
